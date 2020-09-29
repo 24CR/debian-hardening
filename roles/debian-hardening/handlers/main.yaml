@@ -1,0 +1,20 @@
+- name: restart ssh
+    become: yes
+    service: 
+      name: sshd 
+      state: reloaded
+
+- name: reboot
+    msg: "System is rebooting due to updates"
+    connect_timeout: 5
+    reboot_timeout: 300
+    pre_reboot_delay: 0
+    post_reboot_delay: 30
+    test_command: uptime
+
+
+- name: reload nftables
+  become: yes
+  service:
+    name: nftables
+    state: reloaded

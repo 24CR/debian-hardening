@@ -1,0 +1,30 @@
+- name: restart ssh
+  become: true
+  service:
+      name: sshd
+      state: reloaded
+
+- name: reboot
+  reboot:
+    msg: System is rebooting due to updates
+    connect_timeout: 5
+    reboot_timeout: 300
+    pre_reboot_delay: 0
+    post_reboot_delay: 30
+    test_command: uptime
+
+
+- name: reload nftables
+  become: true
+  service:
+    name: nftables
+    state: reloaded
+
+- name: restart fail2ban
+  become: true
+  service:
+    name: fail2ban
+    state: restarted
+
+- name: reload kernel param
+  shell: /sbin/sysctl -p 
