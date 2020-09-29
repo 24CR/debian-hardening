@@ -45,7 +45,7 @@
     immediate: yes
     permanent: yes
   vars:
-    ansible_python_interpreter: "/usr/bin/python"
+    ansible_python_interpreter: '/usr/bin/python3'
 
 - name: Drop any inbound traffic src lo and dst not lo interface
   firewalld:
@@ -53,6 +53,8 @@
     state: enabled
     immediate: yes
     permanent: yes
+  vars:
+    ansible_python_interpreter: '/usr/bin/python3'
 
 - name: Add SSH port to internal zone
   firewalld:
@@ -61,6 +63,8 @@
     state: enabled
     immediate: yes
     permanent: yes
+  vars:
+    ansible_python_interpreter: '/usr/bin/python3'
 
 - name: Add permitted networks to internal zone
   firewalld:
@@ -70,6 +74,8 @@
     immediate: yes
     permanent: yes
   with_items: "{{ allowed_ssh_networks }}"
+  vars:
+    ansible_python_interpreter: '/usr/bin/python3'
 
 - name: Drop ssh from the public zone
   firewalld:
@@ -78,4 +84,5 @@
     state: disabled
     immediate: yes
     permanent: yes
-
+  vars:
+    ansible_python_interpreter: '/usr/bin/python3'

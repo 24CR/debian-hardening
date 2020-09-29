@@ -1,7 +1,7 @@
-- name: remove packages and services 
-  include: remove-packages-services.yml
 - name: update and upgrade the system 
   include: upgrade.yml
+- name: remove packages and services 
+  include: remove-packages-services.yml
 - name: Automatic security updates 
   include: autoupdate.yml
 - name: Misc 

@@ -11,7 +11,8 @@
       line: "deb http://httpredir.debian.org/debian buster main non-free contrib" 
     - regexp: "^deb-src.*"
       line: "deb-src http://httpredir.debian.org/debian buster main non-free contrib" 
-
+   - regexp: ".*cdrom.*"
+      line: "" 
 
 # - name: Check repository deb
 #   shell: grep "^deb " /etc/apt/sources.list | grep -v "^#" | grep -c "httpredir.debian.org" || true

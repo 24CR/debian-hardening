@@ -3,7 +3,6 @@
   hosts: all
   become: true
   become_user: root
-  become_method: sudo
   gather_facts: yes
   roles:
     - debian-hardening
