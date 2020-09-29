@@ -1,0 +1,4 @@
+---
+# nftables_flush_ruleset: yes
+# nftables_config_file: /etc/nftables.conf
+# nftables_tables: []

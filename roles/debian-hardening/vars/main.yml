@@ -1,0 +1,18 @@
+allowed_ssh_networks:
+  - 192.168.137.0/24
+  - 10.10.10.0/24
+  - 172.16.146.0/24
+
+unnecessary_services:
+  - postfix
+  - telnet
+unnecessary_software:
+  - tcpdump
+  - nmap-ncat
+  - wpa_supplicant
+
+repo-deb:
+  - 'deb http://httpredir.debian.org/debian buster main non-free contrib'
+
+repo-deb-src:
+  - 'deb-src http://httpredir.debian.org/debian buster main non-free contrib'

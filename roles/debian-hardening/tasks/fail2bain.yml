@@ -1,0 +1,15 @@
+- name: Install the fail2ban
+  package:
+    name: fail2ban
+    state: latest
+
+
+- name: upload configuration file
+  copy:
+    src: jail.local.tmpl
+    dest: /etc/fail2ban/jail.local
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart fail2ban
+  tags: [fail2ban, config]

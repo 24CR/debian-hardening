@@ -1,0 +1,16 @@
+- name: Copy "hosts" file
+  copy:
+    src: hosts
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: 0644
+
+- name : Install multiple packages
+  apt: 
+    name: sudo 
+    state: present 
+    update_cache: true
+
+
+

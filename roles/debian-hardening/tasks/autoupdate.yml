@@ -1,0 +1,12 @@
+- name: automatic security updates 
+  package:
+    name: unattended-upgrades
+    state: present
+
+- name: Copy 30auto-upgrades 
+  copy:
+    src: ../files/30auto-upgrades.tmpl
+    dest: /etc/apt/apt.conf.d/30auto-upgrades
+    owner: root
+    group: root
+    mode: 0644

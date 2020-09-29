@@ -1,0 +1,8 @@
+- name: upload configuration for kernel hardening
+  copy:
+    src: sysctl.conf.tmpl
+    dest: /etc/sysctl.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload kernel param
