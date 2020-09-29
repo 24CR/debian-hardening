@@ -14,12 +14,6 @@
     test_command: uptime
 
 
-- name: reload firewalld
-  become: true
-  service:
-    name: firewalld
-    state: reloaded
-
 - name: reload nftables
   become: true
   service:
