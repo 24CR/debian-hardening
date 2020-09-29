@@ -1,0 +1,97 @@
+#Firewall rules for SSH - using firewalld ansible module 
+- name: Disable conflicting services
+  become: true
+  service:
+    name: "{{ item }}"
+    state: stopped
+    enabled: no
+  register: disable_service_result
+  failed_when: (disable_service_result is failed)
+               and ('Could not find the requested service' not in disable_service_result.msg)
+  with_items:
+    - iptables
+
+- name: Start service firewalld
+  become: true
+  service:
+    name: firewalld
+    state: started
+
+- name: Enable service firewalld
+  become: true
+  service:
+    name: firewalld
+    enabled: true
+
+- name : Install nftables
+  become: true
+  package:
+    name: nftables
+    state: present
+
+- name: Start service
+  become: true
+  service:
+    name: nftables
+    state: started
+
+- name: Enable service
+  become: true
+  service:
+    name: nftables
+    enabled: true
+
+- name: fluss ruleset
+  shell: nft flush ruleset
+  become: true
+  notify: reload nftables
+
+- name: Allow all traffic on lo interface
+  firewalld:
+    zone: trusted
+    interface: lo
+    state: enabled
+    immediate: yes
+    permanent: yes
+  vars:
+    ansible_python_interpreter: '/usr/bin/python3'
+
+- name: Drop any inbound traffic src lo and dst not lo interface
+  firewalld:
+    rich_rule: 'rule family=ipv4 source address="127.0.0.1" destination not address="127.0.0.1" drop'
+    state: enabled
+    immediate: yes
+    permanent: yes
+  vars:
+    ansible_python_interpreter: '/usr/bin/python3'
+
+- name: Add SSH port to internal zone
+  firewalld:
+    zone: internal
+    service: ssh
+    state: enabled
+    immediate: yes
+    permanent: yes
+  vars:
+    ansible_python_interpreter: '/usr/bin/python3'
+
+- name: Add permitted networks to internal zone
+  firewalld:
+    zone: internal
+    source: "{{ item }}"
+    state: enabled
+    immediate: yes
+    permanent: yes
+  with_items: "{{ allowed_ssh_networks }}"
+  vars:
+    ansible_python_interpreter: '/usr/bin/python3'
+
+- name: Drop ssh from the public zone
+  firewalld:
+    zone: public
+    service: ssh
+    state: disabled
+    immediate: yes
+    permanent: yes
+  vars:
+    ansible_python_interpreter: '/usr/bin/python3'
