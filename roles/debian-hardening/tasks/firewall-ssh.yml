@@ -1,10 +1,10 @@
 #Firewall rules for SSH
 ---
 
-- name : Install nftables firewalld
+- name : Install firewall
   become: true
   package:
-    name: nftables
+    name: firewalld
     state: present
 
 - name: Disable conflicting services
@@ -19,13 +19,25 @@
   with_items:
     - iptables
 
-- name: Start service
+- name: Start service firewalld
+  become: true
+  service:
+    name: firewalld
+    state: started
+
+- name: Enable service firewalld
+  become: true
+  service:
+    name: firewalld
+    enabled: true
+
+- name: Start service nftables
   become: true
   service:
     name: nftables
     state: started
 
-- name: Enable service
+- name: Enable service nftables
   become: true
   service:
     name: nftables

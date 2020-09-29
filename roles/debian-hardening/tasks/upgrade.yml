@@ -22,11 +22,3 @@
 - name: Upgrading Debian packages Debian
   apt:
     upgrade: dist
-
-
-#- name: Check if a reboot is needed
-#  register: reboot_required_file
-#  stat: path=/var/run/reboot-required get_md5=no
-#  notify: 
-#  - reboot
-#  when: reboot_required_file.stat.exists
